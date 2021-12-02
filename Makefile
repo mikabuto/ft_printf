@@ -9,6 +9,7 @@ HEADER = ft_printf.h
 
 FLAGS = -Wall -Wextra -Werror
 RM = rm -f
+CC = cc
 
 all : $(NAME)
 
@@ -16,7 +17,7 @@ $(NAME) : $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
 %.o : %.c $(HEADER)
-	gcc $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean :
 	$(RM) $(OBJS)
