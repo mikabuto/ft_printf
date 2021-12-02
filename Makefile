@@ -19,7 +19,7 @@ $(NAME) : $(OBJS)
 	gcc $(FLAGS) -c $< -o $@
 
 clean :
-	$(RM) $(OBJS) $(OBJS_B)
+	$(RM) $(OBJS)
 
 fclean :	clean
 	$(RM) $(NAME)
