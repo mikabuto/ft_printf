@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf_utils1.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikabuto <mikabuto@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/04 14:35:37 by mikabuto          #+#    #+#             */
+/*   Updated: 2021/12/04 14:35:37 by mikabuto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 int	int_ft_putchar(char c)
@@ -25,16 +37,26 @@ int	int_ft_putstr(char *s)
 	return (ret);
 }
 
+void	ft_swap(char *a, char *b)
+{
+	char	c;
+
+	c = *a;
+	*a = *b;
+	*b = c;
+}
+
 int	int_ft_putposhex(unsigned long long int num, int shift)
 {
 	char						hex[17];
-	char						c;
 	unsigned long long int		rem;
 	int							j;
 	int							i;
 
 	j = 0;
 	i = -1;
+	if (!num)
+		return (int_ft_putstr("0"));
 	while (num)
 	{
 		rem = num % 16;
@@ -44,14 +66,9 @@ int	int_ft_putposhex(unsigned long long int num, int shift)
 			hex[j++] = shift + rem;
 		num /= 16;
 	}
-	--j;
-	while (++i <= j / 2)
-	{
-		c = hex[i];
-		hex[i] = hex[j - i];
-		hex[j - i] = c;
-	}
-	hex[++j] = '\0';
+	while (++i <= (j - 1) / 2)
+		ft_swap(&(hex[i]), &(hex[(j - 1) - i]));
+	hex[j] = '\0';
 	return (int_ft_putstr(hex));
 }
 
@@ -62,11 +79,4 @@ int	int_ft_putneghex(long long int num, int shift)
 	if (!num)
 		return (int_ft_putstr("0"));
 	return (int_ft_putposhex(num, shift));
-}
-
-int	int_ft_putptr(unsigned long long int p)
-{
-	if (!p)
-		return (int_ft_putstr("(nil)"));
-	return (int_ft_putstr("0x") + int_ft_putposhex(p, 87));
 }

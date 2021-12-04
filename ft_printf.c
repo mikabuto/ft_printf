@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mikabuto <mikabuto@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/04 14:35:27 by mikabuto          #+#    #+#             */
+/*   Updated: 2021/12/04 14:35:27 by mikabuto         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static int	conversions(char c, va_list ap)
@@ -7,21 +19,22 @@ static int	conversions(char c, va_list ap)
 	if (c == 's')
 		return (int_ft_putstr(va_arg(ap, char *)));
 	if (c == 'p')
-		return (int_ft_putptr(va_arg(ap, unsigned long)));
+		return (int_ft_putstr("0x") + \
+		int_ft_putposhex(va_arg(ap, unsigned long), 87));
 	if (c == 'd' || c == 'i')
-		return(int_ft_putnbr(va_arg(ap, int)));
+		return (int_ft_putnbr(va_arg(ap, int)));
 	if (c == 'u')
-		return(int_ft_putunsnbr(va_arg(ap, unsigned int)));
+		return (int_ft_putunsnbr(va_arg(ap, unsigned int)));
 	if (c == 'X')
-		return(int_ft_putneghex((long long int)va_arg(ap, int), 55));
+		return (int_ft_putneghex((long long int)va_arg(ap, int), 55));
 	if (c == 'x')
-		return(int_ft_putneghex((long long int)va_arg(ap, int), 87));
+		return (int_ft_putneghex((long long int)va_arg(ap, int), 87));
 	if (c == '%')
 		return (int_ft_putchar('%'));
 	return (0);
 }
 
-int ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	int		i;
@@ -44,13 +57,14 @@ int ft_printf(const char *format, ...)
 	return (len);
 }
 
+// #include <stdio.h>
 // int main(void)
 // {
-// 	const char	*out = "%u\n";
+// 	const char	*out = "%d %s\n";
 // 	//long int	b = 0;
 // 	//unsigned long int b = ULONG_MAX;
 // 	//char	*s = NULL;
-// 	if (ft_printf(out, -1) == printf(out, -1))
+// 	if (ft_printf(out, 189, "hello") == printf(out, 189, "hello"))
 // 		ft_printf("\nyolo\n");
 // 	// printf("Columns:\n" );
 // 	// printf("%d\n\n", printf("0123456789012345678901234567890123456789\n" );
